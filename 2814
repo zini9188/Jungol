@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+
+int printBinary(string n) {
+    int sum = 0;
+    int binary = 1;
+    int len, temp;
+    string s;
+    len = n.length();
+    for (int i = 1; i <= len; i++) {
+        s = n.at(len - i);
+        temp = stoi(s);
+        sum += temp % 10 * binary;
+        binary *= 2;
+    }
+    return sum;
+}
+
+int main() {
+    string n;
+    cin >> n;
+
+    cout << printBinary(n);
+}
