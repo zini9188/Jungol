@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+
+string arr[36] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G",
+                  "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+                  "U", "V", "W", "X", "Y", "Z"};
+int search(string s) {  // A~Z의 인덱스를 알기 위함
+    for (int i = 0; i < 36; i++) {
+        if (s == arr[i])
+            return i;
+    }
+}
+string aToTen(int A, string s) {  // a진수를 10진수로 변환
+    long long b = 0, c;
+    string temp;
+    int len = s.length();
+    for (int i = 0; i < len; i++) {
+        temp = s.front();   // s의 첫 문자를 temp에 저장
+        s = s.erase(0, 1);  // s의 0번째 문자를 제거
+        c = search(temp);   // temp에 해당하는 인덱스를 저장
+        b = (b * A + c);    // Horner's Method 공식
+    }
+    temp = to_string(b);  // b를 string 타입으로 변경
+    return temp;
+}
+
+string tenToB(string s, int B) {  // 10진수를 b진수로 변환
+    string r, temp;
+    long long N;
+    N = stoll(s);           // string을 long long 타입으로 변환
+    while (N > 0) {         // N이 0보다 크면 무한루프
+        temp = arr[N % B];  // temp에 arr[N%B]에 해당하는 문자를 저장
+        r.insert(0, temp);  // r의 첫번째에 temp를 저장
+        N /= B;             // N을 B진수로 나누고 저장
+    }
+    return r;
+}
+
+void print(int A, string s, int B) {
+    string temp;
+    if (s == "0") {  // s가 0인 경우 예외 처리
+        cout << "0" << endl;
+        return;
+    }
+    temp = tenToB(aToTen(A, s), B);
+    cout << temp << endl;
+}
+int main() {
+    int A, B;
+    string s;
+
+    while (1) {
+        cin >> A;
+        if (A == 0)
+            break;
+        cin >> s >> B;
+        print(A, s, B);
+    }
+}
