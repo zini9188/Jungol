@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    string text;
+    string code;
+    getline(cin, code);
+    getline(cin, text);
+
+    int len;
+    len = text.length();
+
+    for (int i = 0; i < len; i++) {
+        if (text[i] == ' ') {  //공백이면 출력하고 continue
+            cout << text[i];
+            continue;
+        }
+        if (text[i] >= 'A' && text[i] <= 'Z') {  //대문자이면 대->소 소->대로 변환 출력하고 continue
+            text[i] = code[text[i] - 'A'] - 32;
+            cout << text[i];
+            continue;
+        } else if (text[i] >= 'a' && text[i] <= 'z') {
+            text[i] = code[text[i] - 'a'];  // 소문자이면 변환 후 출력
+            cout << text[i];
+            continue;
+        } else
+            cout << text[i];
+    }
+}
