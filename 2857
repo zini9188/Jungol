@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+void print(string text[]) {
+    int len;
+    int max;
+    max = text[0].length();
+
+    for (int i = 0; i < 5; i++) { // 제일 긴 배열의 길이를 저장
+        len = text[i].length();
+        if (max < len)
+            max = len;
+    }
+
+    for (int i = 0; i < max; i++) { // 비교하며 공백 or \0이 아니면 출력
+        for (int j = 0; j < 5; j++) { 
+            if ((text[j][i] >= 'A' && text[j][i] <= 'Z') || (text[j][i] >= 'a' && text[j][i] <= 'z') || (text[j][i] >= '0' && text[j][i] <= '9'))
+                cout << text[j][i];
+        }
+    }
+}
+
+int main() {
+    string text[5];
+    for (int i = 0; i < 5; i++) {
+        cin >> text[i];
+    }
+    print(text);
+}
