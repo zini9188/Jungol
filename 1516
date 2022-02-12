@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+string arr[500];
+string arrTemp[500];
+int index;
+int index2;
+void split(string word) {
+    int len;
+    string temp;
+    len = word.length();
+    index = 0;
+    for (int i = 0; i < len; i++) {
+        temp = word[i];
+        if (temp == " ")  // 공백을 만나면 배열 번호 증가
+            index++;
+        else
+            arrTemp[index].append(temp);  // 공백이 아니면 해당 index에 문자 추가
+    }
+}
+
+void compare(string word) {
+    split(word);  // word를 arrTemp에 split
+    int cnt[500] = {0};
+    string temp;
+    for (int i = 0; i < index; i++) {
+        for (int j = i + 1; j <= index; j++) {
+            if (arrTemp[i].compare(arrTemp[j]) > 0) {  // i가 j보다 사전순으로 뒤일 때
+                temp = arrTemp[i];
+                arrTemp[i] = arrTemp[j];
+                arrTemp[j] = temp;
+            }
+        }
+    }
+    index2 = 0;
+    // 새로운 index2만큼 0~ index2까지 비교하면서 다른 문자인 경우
+    // ++index2하며 배열에 추가해준다.
+    arr[0] = arrTemp[0];
+    cnt[0]++;
+    for (int i = 1; i <= index; i++) {
+        if (arrTemp[i] == arr[index2]) {  // i번째가 --index2와 같으면 넘어가기
+            cnt[index2]++;
+            continue;
+        }
+        arr[++index2] = arrTemp[i];  // 같지 않으면 배열에 새롭게 추가해주고 갯수 증가
+        cnt[index2]++;
+    }
+    for (int i = 0; i <= index; i++)  // 임시 배열 초기화
+        arrTemp[i].clear();
+
+    for (int i = 0; i <= index2; i++) {  // 단어들 출력
+        cout << arr[i] << " : " << cnt[i] << endl;
+    }
+}
+
+int main() {
+    string text;
+    string word;
+    while (1) {
+        getline(cin, word);        // 새로운 문장을 입력
+        if (word == "END") break;  // 문장이 "END"인 경우 루프를 빠져나옴
+        compare(word);             // 그렇지 않으면 겹치는 문장을 받아옴
+    }
+}
