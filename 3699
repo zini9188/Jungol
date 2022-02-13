@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+
+int outDays(string kind[], int n) {
+    int cnt[32] = {1};
+    string temp;
+    int index = 0;
+    int mul = 1;
+    if (n == 0)
+        return 0;
+    // 사전 순으로 배열
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (kind[i].compare(kind[j]) < 0) {
+                temp = kind[i];
+                kind[i] = kind[j];
+                kind[j] = temp;
+            }
+        }
+    }
+
+    for (int i = 1; i < n; i++) {  // 같은 의상인 경우 배열에 플러스 시킨다.
+        if (kind[i] == kind[i - 1]) {
+            cnt[index]++;
+            continue;
+        }
+        index++;
+        cnt[index]++;
+    }
+
+    // 경우의 수를 구하면 모든 항목에는 착용하지 않는 경우도 포함하므로
+    // 모든 항목에 +1을 한 뒤 곱하고 모두 다 입지 않는 경우를 빼준다.
+    for (int i = 0; i <= index; i++) {
+        mul *= cnt[i] + 1;
+    }
+    return mul - 1;
+}
+
+int main() {
+    int TC;           // TC (1 <= TC <= 100) 테스트 케이스
+    int N;            // 의상 수 N (0 <= N <= 30)
+    string name[31];  // 의상 이름
+    string kind[31];  // 의상 종류
+    cin >> TC;
+    for (int i = 0; i < TC; i++) {
+        cin >> N;
+        for (int i = 0; i < N; i++) {
+            name[i].clear();
+            kind[i].clear();
+            cin >> name[i] >> kind[i];  // 이름, 종류 입력 받기
+        }
+        // 경우의 수에는 의상의 이름은 필요 없으므로 제거
+        cout << outDays(kind, N) << endl;
+    }
+}
