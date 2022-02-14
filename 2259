@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int k;
+    cin >> k;
+    int dir, len[6];
+    int w = 0, h = 0;
+    for (int i = 0; i < 6; i++) {
+        cin >> dir >> len[i];
+        if (dir == 1 || dir == 2)
+            if (len[i] > w)
+                w = len[i];
+        if (dir == 3 || dir == 4)
+            if (len[i] > h)
+                h = len[i];
+    }
+    // 넓이는 모든 입력값을 곱한 값에서 최대 넓이를 2번 빼준값과 같음
+    int sum = 0;
+    for (int i = 1; i < 6; i++) {
+        sum += len[i] * len[i - 1];
+    }
+    sum += len[0] * len[5] - (w * h * 2);
+    cout << k * sum;
+}
