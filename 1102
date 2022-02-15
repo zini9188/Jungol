@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+int s[101] = {0};
+int index = 0;
+void stack(char cmd) {
+    if (cmd == 'c') {  // c는 스택의 데이터 수를 출력
+        printf("%d\n", index);
+    } else if (cmd == 'o') {  // o는 스택에서 데이터를 빼고 그 데이터를 출력
+        if (index == 0) {     // 인덱스가 0이면 empty
+            printf("empty\n");
+            return;
+        }
+        printf("%d\n", s[--index]);
+        s[index] = 0;
+    }
+}
+void stack_input(int input) {
+    s[index++] = input;
+}
+
+int main() {
+    int n;  // 명령의 수
+    char cmd;
+    int input;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%c", &cmd);
+        if (cmd == 'i') {
+            scanf("%d", &input);
+            stack_input(input);
+            continue;
+        }
+        stack(cmd);
+    }
+}
