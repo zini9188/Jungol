@@ -8,6 +8,20 @@ using namespace std;
 // 2. 레이저이면 스택의 사이즈만큼 카운트 증가.
 // 3. 레이저가 아니면 여는괄호인지 닫는 괄호인지를 파악하여 스택에 push() or pop()
 // 4. 스택의 pop()의 경우 카운트 1 증가.
+// 좀 더 좋아보이는 방법
+// 여는 괄호일 때 input[i-1]의 값을 체크하여 레이저인지를 파악하는 것이 좋아 보임
+// for (i = 0; i < len; i++) { 
+//        if (input[i] == '(')
+//            s.push(input[i]);
+//        else {
+//            s.pop();
+//            if (input[i - 1] == '(')
+//                cnt += s.size();
+//            else
+//                cnt++;
+//        }
+//    }
+
 int piece(string input) {
     stack<int> s;
     int len = input.length();
