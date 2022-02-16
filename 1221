@@ -1,0 +1,38 @@
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+    stack<int> s;
+    char input;
+    int n, x, y;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> input;
+        if (input >= '0' && input <= '9') {  // 0~9 사이이면 스택에 추가
+            s.push(input - '0');
+        } else {  // 스택에 쌓여있는 두 수를 꺼내와서 수식 처리
+            x = s.top();
+            s.pop();
+            y = s.top();
+            s.pop();
+            switch (input) {  // 해당 수식을 계산 후 스택에 삽입 
+                // 선입후출이므로 뒤에서 앞을 계산해준다.
+                case '-':
+                    s.push(y - x);
+                    break;
+                case '+':
+                    s.push(y + x);
+                    break;
+                case '*':
+                    s.push(y * x);
+                    break;
+                case '/':
+                    s.push(y / x);
+                    break;
+            }
+        }
+    }
+    cout << s.top();
+}
